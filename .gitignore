@@ -1,0 +1,5 @@
+# vim temporary files
+*.sw*
+
+# dependencies
+node_modules/
