@@ -1,6 +1,6 @@
 {
   "name": "simple-multi-peer",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "WebRTC multi-peer made simple",
   "main": "./lib/index.js",
   "scripts": {
