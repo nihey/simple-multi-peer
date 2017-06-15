@@ -11,7 +11,7 @@ $ npm install --save simple-multi-peer
 
 As a signalling server it is recommended to use [peer-hub](https://github.com/nihey/node-peer-hub).
 
-```
+```javascript
 var SimpleMultiPeer = require('simple-multi-peer');
 
 var Peers = new SimpleMultiPeer({
@@ -26,7 +26,7 @@ var Peers = new SimpleMultiPeer({
 });
 
 // Send data over a dataChannel to all peers
-Peers.send('I'm alive!!!');
+Peers.send("I'm alive!!!");
 ```
 
 # License
