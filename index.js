@@ -1,5 +1,5 @@
-const io = require('socket.io-client');
-const SimplePeer = require('simple-peer');
+import io from 'socket.io-client';
+import SimplePeer from 'simple-peer';
 
 class SimpleMultiPeer {
   constructor(options) {
@@ -26,7 +26,7 @@ class SimpleMultiPeer {
       peer.on(event.toLowerCase(), this['onPeer' + event].bind(this, id));
     });
   }
- 
+
   send(data) {
     Object.keys(this.peers).forEach((id) => {
       this.peers[id].send(data);
@@ -46,7 +46,7 @@ class SimpleMultiPeer {
   onSignallerConnect() {
     this.signaller.emit('join', this._room);
   }
-  
+
   onSignallerSignal(data) {
     if (!this.peers[data.id]) {
       const options = Object.assign({}, this._peerOptions);
@@ -55,7 +55,7 @@ class SimpleMultiPeer {
     }
     this.peers[data.id].signal(data.signal);
   }
-  
+
   onSignallerPeers(peers) {
     peers.forEach((id) => {
       const options = Object.assign({ initiator: true }, this._peerOptions);
@@ -63,30 +63,30 @@ class SimpleMultiPeer {
       this.registerPeerEvents(this.peers[id], id);
     });
   }
-  
+
   onSignallerDisconnect() {}
-  
+
   /**
    * Peer Events
    */
-  
+
   onPeerConnect(id) {
     console.log('connected to ' + id);
     this.callbacks.connect && this.callbacks.connect(id);
   }
-  
+
   onPeerSignal(id, signal) {
     this.signaller.emit('signal', {
       id: id,
       signal: signal,
     });
   }
-  
+
   onPeerData(id, data) {
     console.log('received ' + data + ' from ' + id);
     this.callbacks.data && this.callbacks.data(id, data);
   }
-  
+
   onPeerClose(id) {
     delete this.peers[id];
     console.log('closed to ' + id);
@@ -94,4 +94,4 @@ class SimpleMultiPeer {
   }
 }
 
-module.exports = SimpleMultiPeer;
+export default SimpleMultiPeer;

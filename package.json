@@ -3,8 +3,13 @@
   "version": "0.1.0",
   "description": "WebRTC multi-peer made simple",
   "main": "./lib/index.js",
+  "files": [
+    "lib"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "rimraf lib",
+    "build": "babel index.js -d ./lib",
+    "prepare": "npm run clean && npm run build"
   },
   "repository": {
     "type": "git",
@@ -26,5 +31,10 @@
   },
   "engines": {
     "node": ">=8.9.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "rimraf": "^2.6.2"
   }
 }
