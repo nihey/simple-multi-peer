@@ -21,19 +21,19 @@ class SimpleMultiPeer {
    * Public API
    */
 
-  registerPeerEvents(peer, id) {
+  registerPeerEvents = (peer, id) => {
     ['Connect', 'Signal', 'Data', 'Close'].forEach((event) => {
       peer.on(event.toLowerCase(), this['onPeer' + event].bind(this, id));
     });
   }
 
-  send(data) {
+  send = (data) => {
     Object.keys(this.peers).forEach((id) => {
       this.peers[id].send(data);
     });
   }
 
-  apply(func, args) {
+  apply = (func, args) => {
     Object.keys(this.peers).forEach((id) => {
       this.peers[id][func].apply(this.peers[id], args);
     });
@@ -43,11 +43,12 @@ class SimpleMultiPeer {
    * Signaller Events
    */
 
-  onSignallerConnect() {
+  onSignallerConnect = () => {
+    console.log(this.signaller);
     this.signaller.emit('join', this._room);
   }
 
-  onSignallerSignal(data) {
+  onSignallerSignal = (data) => {
     if (!this.peers[data.id]) {
       const options = Object.assign({}, this._peerOptions);
       this.peers[data.id] = new SimplePeer(options);
@@ -56,7 +57,7 @@ class SimpleMultiPeer {
     this.peers[data.id].signal(data.signal);
   }
 
-  onSignallerPeers(peers) {
+  onSignallerPeers = (peers) => {
     peers.forEach((id) => {
       const options = Object.assign({ initiator: true }, this._peerOptions);
       this.peers[id] = new SimplePeer(options);
@@ -64,30 +65,30 @@ class SimpleMultiPeer {
     });
   }
 
-  onSignallerDisconnect() {}
+  onSignallerDisconnect = () => {}
 
   /**
    * Peer Events
    */
 
-  onPeerConnect(id) {
+  onPeerConnect = (id) => {
     console.log('connected to ' + id);
     this.callbacks.connect && this.callbacks.connect(id);
   }
 
-  onPeerSignal(id, signal) {
+  onPeerSignal = (id, signal) => {
     this.signaller.emit('signal', {
       id: id,
       signal: signal,
     });
   }
 
-  onPeerData(id, data) {
+  onPeerData = (id, data) => {
     console.log('received ' + data + ' from ' + id);
     this.callbacks.data && this.callbacks.data(id, data);
   }
 
-  onPeerClose(id) {
+  onPeerClose = (id) => {
     delete this.peers[id];
     console.log('closed to ' + id);
     this.callbacks.close && this.callbacks.close(id);
