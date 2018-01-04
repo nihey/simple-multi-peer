@@ -22,7 +22,7 @@ class SimpleMultiPeer {
    */
 
   registerPeerEvents = (peer, id) => {
-    ['Connect', 'Signal', 'Data', 'Close'].forEach((event) => {
+    ['Connect', 'Signal', 'Data', 'Stream', 'Close'].forEach((event) => {
       peer.on(event.toLowerCase(), this['onPeer' + event].bind(this, id));
     });
   }
@@ -44,7 +44,6 @@ class SimpleMultiPeer {
    */
 
   onSignallerConnect = () => {
-    console.log(this.signaller);
     this.signaller.emit('join', this._room);
   }
 
@@ -84,8 +83,13 @@ class SimpleMultiPeer {
   }
 
   onPeerData = (id, data) => {
-    console.log('received ' + data + ' from ' + id);
+    console.log('received data ' + data + ' from ' + id);
     this.callbacks.data && this.callbacks.data(id, data);
+  }
+
+  onPeerStream = (id, stream) => {
+    console.log('received stream ' + stream + ' from ' + id);
+    this.callbacks.stream && this.callbacks.stream(id, stream);
   }
 
   onPeerClose = (id) => {
