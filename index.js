@@ -3,7 +3,7 @@ import SimplePeer from 'simple-peer';
 
 class SimpleMultiPeer {
   constructor(options) {
-    this.signaller = io(options.server);
+    this.signaller = io(options.server, options.connectionOptions || {});
 
     this._peerOptions = options.peerOptions || {};
     this._room = options.room;
