@@ -39,6 +39,10 @@ class SimpleMultiPeer {
     });
   }
 
+  close = (id) => {
+    this.peers[id].destroy();
+  }
+
   /**
    * Signaller Events
    */
