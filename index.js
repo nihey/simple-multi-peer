@@ -43,10 +43,6 @@ class SimpleMultiPeer {
     return this.peers[id];
   }
 
-  close = (id) => {
-    this.peers[id].destroy();
-  }
-
   /**
    * Signaller Events
    */
@@ -57,7 +53,6 @@ class SimpleMultiPeer {
 
   onSignallerSignal = (data) => {
     if (!this.peers[data.id]) {
-      console.log('[onSignallerSignal]: ', data);
       const options = Object.assign({}, this._peerOptions);
       this.peers[data.id] = new SimplePeer(options);
       this.registerPeerEvents(this.peers[data.id], data.id);
@@ -66,7 +61,6 @@ class SimpleMultiPeer {
   }
 
   onSignallerPeers = (peers) => {
-    console.log('[onSignallerPeers]: ', peers);
     peers.forEach((id) => {
       const options = Object.assign({ initiator: true }, this._peerOptions);
       this.peers[id] = new SimplePeer(options);
