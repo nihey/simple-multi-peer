@@ -57,6 +57,7 @@ class SimpleMultiPeer {
 
   onSignallerSignal = (data) => {
     if (!this.peers[data.id]) {
+      console.log('[onSignallerSignal]: ', data);
       const options = Object.assign({}, this._peerOptions);
       this.peers[data.id] = new SimplePeer(options);
       this.registerPeerEvents(this.peers[data.id], data.id);
