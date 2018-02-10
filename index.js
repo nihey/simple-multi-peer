@@ -39,6 +39,10 @@ class SimpleMultiPeer {
     });
   }
 
+  getPeer = (id) => {
+    return this.peers[id];
+  }
+
   close = (id) => {
     this.peers[id].destroy();
   }
@@ -61,6 +65,7 @@ class SimpleMultiPeer {
   }
 
   onSignallerPeers = (peers) => {
+    console.log('[onSignallerPeers]: ', peers);
     peers.forEach((id) => {
       const options = Object.assign({ initiator: true }, this._peerOptions);
       this.peers[id] = new SimplePeer(options);
